@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Does Your Business Feel Harder Than It Should? | The ADHD Business Coach</title>
+<meta name="description" content="A quiz for ADHD and neurodivergent entrepreneurs. 10 questions across 10 areas of your business. Find out what is actually getting in the way.">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Shadows+Into+Light+Two&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--yellow:#F8C419;--teal:#0FA79D;--coral:#E06A3C;--purple:#7B68B5;--rust:#C75D3A;
+--cream:#FFF9F0;--dark:#2D2A26;--grey:#F5F3EE;--mid:#777;--light:#bbb;--border:#e0ddd6;
+}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--cream);color:var(--dark);-webkit-font-smoothing:antialiased}
+.screen{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;animation:fadeIn .3s ease}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+a{color:var(--teal)}
+
+/* ── Cover ── */
+.cover{padding:3rem 1.5rem;position:relative}
+.cover::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--yellow)}
+.cover-inner{text-align:center;max-width:520px}
+.cover h1{font-family:'Young Serif',serif;font-size:clamp(28px,6vw,42px);line-height:1.15;font-weight:400;margin:0 0 1.2rem}
+.accent-line{width:52px;height:3px;background:var(--yellow);border-radius:2px;margin:0 auto 1.5rem}
+.cover .sub{font-size:16px;line-height:1.65;color:var(--mid);margin:0 0 .4rem}
+.cover .detail{font-size:14px;color:var(--light);margin:0 0 2.5rem}
+.cover .tagline{font-size:13px;color:var(--light);margin-top:28px}
+
+/* ── Buttons ── */
+.btn{border:none;padding:13px 32px;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-outline{background:none;color:var(--teal);border:1.5px solid var(--teal);padding:12px 24px}
+.btn:hover{opacity:.88}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* ── Progress ── */
+.progress-wrap{width:100%;max-width:500px;margin:0 auto 2rem}
+.progress-meta{display:flex;justify-content:space-between;font-size:13px;color:#999;margin-bottom:6px}
+.progress-track{height:5px;border-radius:3px;background:#e8e4dd;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;background:var(--yellow);transition:width .4s ease}
+
+/* ── Questions ── */
+.q-screen{padding:2.5rem 1.5rem}
+.q-inner{max-width:520px;width:100%}
+.area-pill{display:inline-block;font-size:13px;color:var(--teal);background:rgba(15,167,157,.07);padding:4px 14px;border-radius:6px;letter-spacing:.02em;margin-bottom:8px}
+.q-title{font-family:'Young Serif',serif;font-size:clamp(19px,4.5vw,24px);font-weight:400;line-height:1.4;margin:8px 0 1.5rem;text-align:center}
+.answer-btn{display:block;width:100%;text-align:left;padding:15px 16px;border-radius:10px;border:1px solid var(--border);background:#fff;font-size:15px;line-height:1.6;color:var(--dark);cursor:pointer;font-family:inherit;transition:all .2s;margin-bottom:10px}
+.answer-btn:hover{border-color:var(--teal);background:rgba(15,167,157,.03)}
+.answer-btn.selected{border:2px solid var(--teal);background:rgba(15,167,157,.05)}
+.answer-btn:disabled{cursor:default}
+.answer-btn:disabled:not(.selected):hover{border-color:var(--border);background:#fff}
+
+/* ── Teaser + Email ── */
+.gate{padding:3rem 1.5rem}
+.gate-inner{max-width:440px;width:100%;text-align:center}
+.gate-inner .result-preview{margin-bottom:2rem}
+.gate-inner .result-preview h2{font-family:'Young Serif',serif;font-size:clamp(22px,5vw,30px);font-weight:400;line-height:1.25;margin-bottom:4px}
+.gate-inner .teaser-line{font-size:15px;color:var(--mid);line-height:1.6;margin-top:12px;max-width:380px;display:inline-block}
+.gate-form{text-align:left;margin-top:1.5rem}
+.gate-form label{display:block;font-size:13px;font-weight:500;color:var(--dark);margin-bottom:5px}
+.gate-form input[type="text"],.gate-form input[type="email"]{width:100%;padding:11px 14px;border-radius:8px;border:1.5px solid #ddd;font-size:15px;margin-bottom:16px;font-family:inherit;outline:none;background:#fff;transition:border .2s}
+.gate-form input[type="text"]:focus,.gate-form input[type="email"]:focus{border-color:var(--teal)}
+.consent-row{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:14px;line-height:1.55;color:#555;margin-bottom:20px}
+.consent-row input{margin-top:3px;width:18px;height:18px;accent-color:var(--teal);flex-shrink:0}
+.small-print{font-size:12px;color:#aaa;line-height:1.6;margin-bottom:20px}
+
+/* ── Results ── */
+.result{padding:2.5rem 1.5rem;justify-content:flex-start !important;padding-top:3rem}
+.result-inner{max-width:560px;width:100%;margin:0 auto}
+.result-header{text-align:center;margin-bottom:2rem}
+.result-header .rlabel{font-size:14px;color:#999;letter-spacing:.03em;margin-bottom:6px}
+.result-header h1{font-family:'Young Serif',serif;font-size:clamp(20px,4vw,26px);font-weight:400;line-height:1.3;margin-bottom:4px}
+.result-header h2{font-family:'Young Serif',serif;font-size:clamp(24px,5vw,34px);font-weight:400;line-height:1.2}
+.result-bar{width:48px;height:3px;border-radius:2px;margin:16px auto 0}
+.slabel{font-family:'Shadows Into Light Two',cursive;font-size:15px;margin-bottom:12px}
+.rsection{margin-bottom:2rem}
+.rsection p{font-size:15px;line-height:1.75;margin-bottom:1rem}
+.reframe{border-left:3px solid currentColor;padding-left:20px;margin-bottom:2rem}
+.reframe p{font-size:15px;line-height:1.75;margin-bottom:1rem}
+.tip-box{background:var(--grey);border-radius:12px;padding:1.5rem;margin-bottom:2rem;border-left:3px solid var(--yellow)}
+.tip-box p{font-size:15px;line-height:1.75;margin-bottom:1rem}
+.bridge{border-top:1px solid var(--border);padding-top:2rem;margin-bottom:2rem}
+.bridge h3{font-family:'Young Serif',serif;font-size:19px;font-weight:400;line-height:1.35;margin-bottom:1rem}
+.bridge p{font-size:15px;line-height:1.75;margin-bottom:1rem}
+.rfoot{border-top:1px solid #e8e4dd;padding-top:16px;text-align:center;font-size:13px;color:var(--light)}
+
+/* Yellow dot accents on question screens */
+.qdot{position:absolute;border-radius:50%;background:var(--yellow);opacity:.25;pointer-events:none}
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══ -->
+<div class="screen cover active" id="s-cover">
+  <div class="cover-inner">
+    <h1>Why does your business feel harder than it should?</h1>
+    <div class="accent-line"></div>
+    <p class="sub">Find out what is actually getting in the way, and what to do about it.</p>
+    <p class="detail">10 questions. About 4 minutes.</p>
+    <button class="btn btn-teal" onclick="startQuiz()">Take the quiz</button>
+    <p class="tagline">For ADHD and neurodivergent entrepreneurs</p>
+  </div>
+</div>
+
+<!-- ═══ QUESTIONS ═══ -->
+<div class="screen q-screen" id="s-quiz" style="position:relative">
+  <div class="qdot" style="top:12%;right:8%;width:10px;height:10px"></div>
+  <div class="qdot" style="bottom:15%;left:6%;width:7px;height:7px"></div>
+  <div class="q-inner">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span id="qcount"></span><span id="qpct"></span></div>
+      <div class="progress-track"><div class="progress-fill" id="qfill"></div></div>
+    </div>
+    <div style="text-align:center"><span class="area-pill" id="qarea"></span></div>
+    <h2 class="q-title" id="qtitle"></h2>
+    <div id="qanswers"></div>
+  </div>
+</div>
+
+<!-- ═══ TEASER + EMAIL GATE ═══ -->
+<div class="screen gate" id="s-gate">
+  <div class="gate-inner">
+    <div class="result-preview">
+      <p style="font-size:14px;color:#999;margin-bottom:8px">Your result is ready</p>
+      <div class="accent-line" style="margin-bottom:12px"></div>
+      <p style="font-size:15px;color:var(--mid);margin-bottom:4px">Your strongest pattern is</p>
+      <h2 id="gate-name" style="color:var(--teal)"></h2>
+      <p class="teaser-line" id="gate-teaser"></p>
+    </div>
+    <p style="font-size:15px;color:var(--dark);margin-bottom:4px;font-weight:500">Want the full breakdown?</p>
+    <p style="font-size:14px;color:var(--mid);margin-bottom:20px;line-height:1.6">Pop your details in and I will send it to you, along with one thing you can do about it this week.</p>
+
+    <iframe data-tally-src="https://tally.so/embed/vG11Vv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="300" frameborder="0" marginheight="0" marginwidth="0" title="Quiz Email Capture"></iframe>
+    <script src="https://tally.so/widgets/embed.js"></script>
+
+    <p class="small-print" style="text-align:left">Your email is used to send your quiz result. Your data is held by Joanne Gibson, The ADHD Business Coach, and will not be shared or sold. <a href="privacy-policy.html" target="_blank">Read the full privacy policy</a>.</p>
+  </div>
+</div>
+
+<!-- ═══ RESULT ═══ -->
+<div class="screen result" id="s-result">
+  <div class="result-inner">
+    <div class="result-header">
+      <p class="rlabel">Your result</p>
+      <h1 id="r-intro"></h1>
+      <h2 id="r-name"></h2>
+      <div class="result-bar" id="r-bar"></div>
+    </div>
+    <div class="rsection" id="r-suggests"></div>
+    <div class="reframe" id="r-reframe"></div>
+    <div class="tip-box" id="r-tip"></div>
+    <div class="bridge" id="r-bridge"></div>
+    <div class="rfoot">Joanne Gibson · The ADHD Business Coach · ADHD Business HQ</div>
+  </div>
+</div>
+
+<script>
+var questions=[
+{area:"Getting started",q:"You sit down to work on your business. What usually happens first?",A:"I can see several things that need doing, and they all feel important. I move between them, but struggle to decide which one needs my attention first.",B:"I start with something useful but safely behind the scenes. The more visible tasks, such as posting, selling or following up, somehow get left until later.",C:"I go back to something I have already been working on and start changing it again. I know it needs to leave my laptop eventually, but it never feels quite ready.",D:"I spend time trying to remember where I got to. There are unfinished tasks and missed bits everywhere, and I cannot see a clear place to begin again."},
+{area:"Your offers",q:"If someone asked what you offer and how much it costs, what would happen?",A:"I could tell them, but I would probably give them several options because I do more than one thing and I am never quite sure which offer to lead with.",B:"I know what I offer, but talking about it confidently feels uncomfortable. I might soften the price, overexplain it or make it sound smaller than it is.",C:"I would struggle to give a simple answer because I am still working out the wording, structure or price. There is always another part that needs sorting out.",D:"I would need to check what the current version is. My offers have changed a few times, and some of the old information is probably still out there."},
+{area:"Visibility",q:"What usually happens when you think about posting about your business?",A:"I tend to post when I have a burst of ideas or something new to talk about. Then my attention moves somewhere else and the posting stops.",B:"I often know what I want to say, but sharing it feels much harder than writing it. I can spend ages editing a post and still decide not to publish it.",C:"I keep thinking I need to sort out my message before I post more regularly. I do not want to confuse people, so I wait until everything feels clearer.",D:"I have posted regularly before, but once I miss a few days or weeks, coming back feels awkward. The longer I leave it, the harder it becomes."},
+{area:"Sales and follow up",q:"Someone tells you they are interested and asks for more information. What happens next?",A:"I get excited and start putting together far more information than they need. What could have been a simple reply turns into another project.",B:"I know what to send, but I hesitate. I start wondering whether the price is right, whether I sound too sales focused or whether they will change their mind.",C:"I do not have one clear place to send them. I have different versions of the offer, and none of them feels completely ready.",D:"I mean to reply when I have more time or energy. Then several days pass, and the late reply starts to feel more difficult than the original one."},
+{area:"Admin and systems",q:"If we looked behind the scenes of your business, what would we find?",A:"Information spread across several apps, notebooks and folders. Each system made sense when I started it, but they do not work together.",B:"The admin may be more organised than people expect. It has clear steps and feels easier to manage than putting myself and my work in front of people.",C:"A system that is always being improved. I can see ways to make it better, so I keep changing the setup instead of using it long enough to see whether it works.",D:"Unfinished admin, missed updates and things I know need attention. The problem is not knowing which bit to sort out first."},
+{area:"Email",q:"Which of these sounds most like your relationship with email marketing?",A:"I have tried different platforms, lead magnets or newsletter ideas, but they have not joined together into one working process.",B:"I have people on my list, but I worry about emailing too often or saying something that makes them unsubscribe. So I email far less than I intended.",C:"I want to email more regularly, but I keep waiting until my offers and messaging are clearer. There is always something I think I need to fix first.",D:"I started a list and then stopped emailing it. I would like to begin again, but I do not know what to say after being quiet for so long."},
+{area:"Networking",q:"What tends to happen when you meet people through networking or business events?",A:"I have great conversations and come away with lots of ideas, possible collaborations and people to contact. Following up on all of it is the difficult part.",B:"I am usually comfortable talking to one person at a time. Introducing myself to a group or explaining what I do in front of everyone feels very different.",C:"I find it difficult to explain what I do without giving people the whole backstory. I can see how everything connects, but turning it into a simple answer is hard.",D:"I have been to networking events before, but once I stop going, returning feels like a much bigger job. It can feel as though I am starting from the beginning again."},
+{area:"Planning",q:"What usually happens when you try to plan your week?",A:"I make a plan that includes everything I want to do. Then something new catches my attention, the priorities change and the original plan gets lost.",B:"I plan the tasks that feel clear and manageable. The things involving visibility, selling or difficult conversations stay vague, which makes them easy to avoid.",C:"I spend a lot of time organising the plan and trying to get it right. Sometimes the planning becomes another task rather than helping me do the work.",D:"I have tried plenty of planning systems, but they tend to fall apart when life changes or I miss a few days. Starting another plan can feel pointless."},
+{area:"Money",q:"Which answer best describes what is happening with money in your business?",A:"Money comes in from different things, but it is not predictable. I often move on to a new offer or idea before the previous one has had time to become established.",B:"I find pricing and money conversations uncomfortable. I may charge less, add extra work or avoid following up because I do not want to seem pushy.",C:"I keep changing my prices, packages or what is included. I am trying to find the right version, but it makes it harder to sell anything consistently.",D:"I do not have a clear picture of what is coming in and going out. I know I need to look, but there is enough unfinished financial admin to make starting feel difficult."},
+{area:"Starting again",q:"When work gets interrupted or your plans fall apart, what usually helps you get moving again?",A:"I look for a new idea, offer, platform or way of working. Something new gives me energy, even when I already have things that need finishing.",B:"I turn towards quieter work that other people cannot see. I may still be working, but I stop talking about the business, selling or contacting people.",C:"I go back over my offers, messaging or plans to work out what went wrong. This can turn into changing everything when only one part needed attention.",D:"I step away from the business for a while. When I am ready to return, I need a clear and manageable way back in, but that is often missing."}
+];
+
+var results={
+A:{name:"The Everything at Once Thinker",color:"var(--coral)",teaser:"You can see so many things that could make a difference that deciding where to put your attention becomes a job in itself.",
+whatSuggests:"There is plenty happening in your business. Ideas, offers, content, admin, opportunities and things you started because they genuinely mattered at the time.\n\nThe problem is not that you do not know what to do. You can see so many things that could make a difference that deciding where to put your attention becomes a job in itself.\n\nYou may start the day intending to finish one thing, then notice three other things that also need doing. By the end of the day, you have been busy, but the piece of work that would help someone find you, understand what you offer or pay you is still sitting there unfinished.",
+reframe:"You do not need fewer ideas. You need a way to stop every good idea becoming today\u2019s job.\n\nA new idea can be brilliant and still not need your attention right now. Putting it somewhere safe is not abandoning it. It is protecting the work you have already decided matters.\n\nWhen the work is visible and you have a clear way to choose what comes first, you are not relying on your brain to hold all the possibilities and make the same decision over and over again.",
+tip:"Write down every open loop that is taking up space in your head. Include the unfinished pages, unanswered emails, ideas, decisions and bits of admin you keep remembering at inconvenient moments.\n\nThen choose one question:\n\nWhich open loop, if I closed it, would make it easier for someone to find me, understand what I offer, pay me or receive the work they have already paid for?\n\nChoose one. Write down what finished looks like, then identify the next step you can physically do.\n\nEverything else can wait somewhere visible.",
+bridge:"The ADHD Business Space is not somewhere you come to collect more ideas or create another enormous plan.\n\nYou bring one important piece of unfinished business work. We help you decide what matters, break it into clear steps and keep moving until it is finished and working in your business.\n\nOver six weeks, the aim is to close the loops that are using your time and attention, so you have more space for your clients, your income and the ideas you want to develop next."},
+B:{name:"The Invisible Expert",color:"var(--teal)",teaser:"The difficulty is making enough of your work visible for new people to find you, understand how you can help and know what to do next.",
+whatSuggests:"You know your work. The people who have worked with you can probably see the value in what you do.\n\nThe difficulty is making enough of that work visible for new people to find you, understand how you can help and know what to do next.\n\nWork behind the scenes often has clearer edges. You can update a document, organise a folder or improve a client resource without wondering what anyone will think of it.\n\nPosting, following up or talking about your offer comes with more decisions. What do I say? How much do I share? Am I explaining it properly? Will people think I am being too sales focused?\n\nBy the time you have worked through all of that, doing another useful job behind the scenes feels much easier.",
+reframe:"You do not need to become louder, post every day or turn your life into content.\n\nVisibility simply means making it easier for the right people to see what you do, understand whether it is for them and take the next step.\n\nThat might be a clear offer page. It might be following up with someone who has already shown an interest. It might be talking about the same offer more than once instead of assuming everyone saw it the first time.\n\nYou do not need to be everywhere. You need a way of being visible that you can realistically keep returning to.",
+tip:"Choose one person who has already shown an interest in your work, asked a question or mentioned a problem you can help with.\n\nSend them a simple message:\n\n\u201cI\u2019ve been thinking about what you said about __________. I may be able to help with that. Would you like me to send you the details?\u201d\n\nYou do not need to write a new sales page or create a complicated sequence first. You are starting one useful conversation with one real person.",
+bridge:"In The ADHD Business Space, we would not begin by telling you to post more.\n\nWe would work out where the process is getting stuck. You might need a clearer offer, an easier way to follow up, a finished sales page or a simple visibility rhythm that does not take over your life.\n\nYou choose the piece that would make the biggest difference, then use the six weeks to get it out of your head and into your business where people can see it and act on it."},
+C:{name:"The Tangled Offer Thinker",color:"var(--purple)",teaser:"You can see the whole picture, but when you try to put it into one offer or one simple explanation, everything starts competing for space.",
+whatSuggests:"You may not be unclear about your work at all. You might have the opposite problem. You can see the whole picture.\n\nYou can see the different people you could help, all the ways you could support them and the details that make your work different. When you try to put that into one offer or one simple explanation, everything starts competing for space.\n\nYou write a version, then remember something important that is missing. You change the structure, rethink the price or decide the wording still does not explain it properly.\n\nThe offer stays in your documents while you keep trying to make it clearer.",
+reframe:"There is a point where more thinking will not give you the information you need.\n\nAn offer becomes clearer when a real person sees it, asks questions and decides whether it is useful to them. Their response will tell you far more than another afternoon spent changing the heading.\n\nPutting out a clear enough version does not mean it has to stay that way forever. It gives you something real to learn from.\n\nYou are not lowering the quality of your work. You are giving the work a chance to exist outside your head.",
+tip:"Choose the offer you most want people to buy.\n\nAnswer four questions using plain language:\n\n1. Who is it for?\n2. What will it help them finish, change or solve?\n3. What will they receive?\n4. How much does it cost, and what do they need to do next?\n\nDo not redesign it yet. Show those answers to one person who could realistically need the offer and ask them what is clear and what is missing.",
+bridge:"In The ADHD Business Space, you choose one offer or piece of work and take it far enough that someone can understand it, buy it and receive it.\n\nWe do not strip away the thinking that makes your work good. We separate what needs deciding now from everything that could be developed later.\n\nBy the end of the six weeks, the goal is not another improved draft. It is something finished, tested and working in your business."},
+D:{name:"The Starting Over Specialist",color:"var(--rust)",teaser:"Starting something new can feel much easier than reopening everything you left behind. So you begin again.",
+whatSuggests:"You have probably had several points where your business was moving. You were posting, building an offer, contacting people or working through a plan.\n\nThen something interrupted it. Life became busy, your energy changed, another responsibility took over or you missed a few of the steps you had planned.\n\nWhen there is no clear way back in, returning means trying to remember where you were, what you decided and what still matters. Starting something new can feel much easier than reopening all of that.\n\nSo you begin again with a new plan, a new system or a cleaner version of the idea. It brings some energy back, but it can also leave more unfinished work behind.",
+reframe:"A business that works with an ADHD brain cannot depend on you never losing momentum.\n\nLife will interrupt. Energy will change. Plans will need to move.\n\nYou do not need a stricter routine. You need a way to leave yourself a return point, so a gap does not turn into a complete restart.\n\nThe aim is not to become someone who never stops. It is to make coming back easier when you do.",
+tip:"Choose one unfinished piece of work that still matters. Do not redesign it or start a new version.\n\nOpen it and write down three things:\n\n1. Where is it now?\n2. What has already been completed?\n3. What is the next visible action?\n\nThen do that one action. You are allowed to stop afterwards. The purpose is to create movement, not make yourself finish the whole thing in one sitting.",
+bridge:"The ADHD Business Space is built around implementation and returning to the work.\n\nThe regular contact means that if your momentum drops, you are not left alone trying to work out how to begin again. We look at what changed, adjust the next step and help you reconnect with the work without scrapping everything you have already done.\n\nThe goal is not six perfect weeks. It is to close important loops and create a way of working that makes returning possible."}
+};
+
+var state={qi:0,answers:[],name:"",winner:""};
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active")});
+  var el=document.getElementById("s-"+id);
+  el.classList.remove("active");
+  void el.offsetWidth;
+  el.classList.add("active");
+  window.scrollTo({top:0,behavior:"auto"});
+}
+
+function startQuiz(){state.qi=0;state.answers=[];renderQ();show("quiz")}
+
+function renderQ(){
+  var q=questions[state.qi],num=state.qi+1,pct=Math.round(num/10*100);
+  document.getElementById("qcount").textContent="Question "+num+" of 10";
+  document.getElementById("qpct").textContent=pct+"%";
+  document.getElementById("qfill").style.width=pct+"%";
+  document.getElementById("qarea").textContent=q.area;
+  document.getElementById("qtitle").textContent=q.q;
+  var c=document.getElementById("qanswers");c.innerHTML="";
+  ["A","B","C","D"].forEach(function(L){
+    var b=document.createElement("button");b.className="answer-btn";b.textContent=q[L];
+    b.onclick=function(){pick(L,this)};c.appendChild(b);
+  });
+}
+
+function pick(L,btn){
+  document.querySelectorAll(".answer-btn").forEach(function(b){b.disabled=true});
+  btn.classList.add("selected");
+  setTimeout(function(){
+    state.answers.push(L);state.qi++;
+    if(state.qi>=10){showGate()}
+    else{renderQ();show("quiz")}
+  },350);
+}
+
+function getWinner(){
+  var c={A:0,B:0,C:0,D:0};
+  state.answers.forEach(function(a){c[a]++});
+  return Object.entries(c).sort(function(a,b){return b[1]-a[1]})[0][0];
+}
+
+function showGate(){
+  var w=getWinner();state.winner=w;var r=results[w];
+  document.getElementById("gate-name").textContent=r.name;
+  document.getElementById("gate-name").style.color=r.color;
+  document.getElementById("gate-teaser").textContent=r.teaser;
+  show("gate");
+}
+
+// Listen for Tally form submission and auto-show result
+window.addEventListener("message",function(e){
+  if(e.data&&typeof e.data==="string"){
+    try{var d=JSON.parse(e.data);if(d.event==="Tally.FormSubmitted"){showFullResult()}}catch(x){}
+  }
+  if(e.data&&e.data.event==="Tally.FormSubmitted"){showFullResult()}
+});
+
+function makeParagraphs(text,container){
+  text.split("\n\n").forEach(function(t){
+    var p=document.createElement("p");p.textContent=t;container.appendChild(p);
+  });
+}
+
+function showFullResult(){
+  var r=results[state.winner];
+
+  document.getElementById("r-intro").textContent="Your strongest pattern is";
+  document.getElementById("r-name").textContent=r.name;
+  document.getElementById("r-name").style.color=r.color;
+  document.getElementById("r-bar").style.background=r.color;
+
+  var sd=document.getElementById("r-suggests");sd.innerHTML="";
+  var sl1=document.createElement("p");sl1.className="slabel";sl1.style.color=r.color;sl1.textContent="What your answers suggest";sd.appendChild(sl1);
+  makeParagraphs(r.whatSuggests,sd);
+
+  var rd=document.getElementById("r-reframe");rd.innerHTML="";rd.style.borderColor=r.color;
+  var sl2=document.createElement("p");sl2.className="slabel";sl2.style.color=r.color;sl2.textContent="Here is the thing";rd.appendChild(sl2);
+  makeParagraphs(r.reframe,rd);
+
+  var td=document.getElementById("r-tip");td.innerHTML="";
+  var sl3=document.createElement("p");sl3.className="slabel";sl3.style.color="var(--teal)";sl3.textContent="One thing you can do this week";td.appendChild(sl3);
+  makeParagraphs(r.tip,td);
+
+  var bd=document.getElementById("r-bridge");bd.innerHTML="";
+  var bh=document.createElement("h3");bh.textContent="What this means for your business";bd.appendChild(bh);
+  makeParagraphs(r.bridge,bd);
+  var cb=document.createElement("button");cb.className="btn btn-outline";cb.textContent="Find out about The ADHD Business Space";cb.style.marginTop="16px";bd.appendChild(cb);
+
+  show("result");
+}
+</script>
+</body>
+</html>
