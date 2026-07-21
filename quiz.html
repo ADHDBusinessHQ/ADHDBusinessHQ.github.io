@@ -132,8 +132,7 @@ a{color:var(--teal)}
     <p style="font-size:15px;color:var(--dark);margin-bottom:4px;font-weight:500">Want the full breakdown?</p>
     <p style="font-size:14px;color:var(--mid);margin-bottom:20px;line-height:1.6">Pop your details in and I will send it to you, along with one thing you can do about it this week.</p>
 
-    <iframe data-tally-src="https://tally.so/embed/vG11Vv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="300" frameborder="0" marginheight="0" marginwidth="0" title="Quiz Email Capture"></iframe>
-    <script src="https://tally.so/widgets/embed.js"></script>
+    <div id="tally-gate-container"></div>
 
     <p class="small-print" style="text-align:left">Your email is used to send your quiz result. Your data is held by Joanne Gibson, The ADHD Business Coach, and will not be shared or sold. <a href="privacy-policy.html" target="_blank">Read the full privacy policy</a>.</p>
   </div>
@@ -156,6 +155,7 @@ a{color:var(--teal)}
   </div>
 </div>
 
+<script src="https://tally.so/widgets/embed.js"></script>
 <script>
 var questions=[
 {area:"Getting started",q:"You sit down to work on your business. What usually happens first?",A:"I can see several things that need doing, and they all feel important. I move between them, but struggle to decide which one needs my attention first.",B:"I start with something useful but safely behind the scenes. The more visible tasks, such as posting, selling or following up, somehow get left until later.",C:"I go back to something I have already been working on and start changing it again. I know it needs to leave my laptop eventually, but it never feels quite ready.",D:"I spend time trying to remember where I got to. There are unfinished tasks and missed bits everywhere, and I cannot see a clear place to begin again."},
@@ -236,15 +236,35 @@ function getWinner(){
   return Object.entries(c).sort(function(a,b){return b[1]-a[1]})[0][0];
 }
 
+function buildTallyEmbed(archetypeName){
+  var encoded=encodeURIComponent(archetypeName);
+  var src="https://tally.so/embed/vG11Vv?archetype="+encoded+"&alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";
+  var container=document.getElementById("tally-gate-container");
+  container.innerHTML="";
+  var iframe=document.createElement("iframe");
+  iframe.setAttribute("data-tally-src",src);
+  iframe.setAttribute("loading","lazy");
+  iframe.setAttribute("width","100%");
+  iframe.setAttribute("height","300");
+  iframe.setAttribute("frameborder","0");
+  iframe.setAttribute("marginheight","0");
+  iframe.setAttribute("marginwidth","0");
+  iframe.setAttribute("title","Quiz Email Capture");
+  container.appendChild(iframe);
+  if(window.Tally&&typeof window.Tally.loadEmbeds==="function"){
+    window.Tally.loadEmbeds();
+  }
+}
+
 function showGate(){
   var w=getWinner();state.winner=w;var r=results[w];
   document.getElementById("gate-name").textContent=r.name;
   document.getElementById("gate-name").style.color=r.color;
   document.getElementById("gate-teaser").textContent=r.teaser;
+  buildTallyEmbed(r.name);
   show("gate");
 }
 
-// Listen for Tally form submission and auto-show result
 window.addEventListener("message",function(e){
   if(e.data&&typeof e.data==="string"){
     try{var d=JSON.parse(e.data);if(d.event==="Tally.FormSubmitted"){showFullResult()}}catch(x){}
